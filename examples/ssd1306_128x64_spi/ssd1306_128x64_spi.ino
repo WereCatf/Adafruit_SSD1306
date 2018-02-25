@@ -61,10 +61,6 @@ static const unsigned char PROGMEM logo16_glcd_bmp[] =
   B01110000, B01110000,
   B00000000, B00110000 };
 
-#if (SSD1306_LCDHEIGHT != 64)
-#error("Height incorrect, please fix WereCatf_SSD1306.h!");
-#endif
-
 void setup()   {                
   Serial.begin(9600);
 
