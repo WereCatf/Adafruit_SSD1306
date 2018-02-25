@@ -365,15 +365,12 @@ void WereCatf_SSD1306::display(void) {
 
   ssd1306_command(SSD1306_PAGEADDR);
   ssd1306_command(0); // Page start address (0 = reset)
-  #if HEIGHT == 64
+  if (HEIGHT == 64)
     ssd1306_command(7); // Page end address
-  #endif
-  #if HEIGHT == 32
+  else if (HEIGHT == 32)
     ssd1306_command(3); // Page end address
-  #endif
-  #if HEIGHT == 16
+  else if (HEIGHT == 16)
     ssd1306_command(1); // Page end address
-  #endif
 
   if (sid != -1)
   {
