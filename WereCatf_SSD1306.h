@@ -12,11 +12,12 @@ please support Adafruit and open-source hardware by purchasing
 products from Adafruit!
 
 Written by Limor Fried/Ladyada  for Adafruit Industries.
+Modified by WereCatf.
 BSD license, check license.txt for more information
 All text above, and the splash screen must be included in any redistribution
 *********************************************************************/
-#ifndef _Adafruit_SSD1306_H_
-#define _Adafruit_SSD1306_H_
+#ifndef _WereCatf_SSD1306_H_
+#define _WereCatf_SSD1306_H_
 
 #if ARDUINO >= 100
  #include "Arduino.h"
@@ -55,45 +56,6 @@ All text above, and the splash screen must be included in any redistribution
 #define SSD1306_I2C_ADDRESS   0x3C  // 011110+SA0+RW - 0x3C or 0x3D
 // Address for 128x32 is 0x3C
 // Address for 128x64 is 0x3D (default) or 0x3C (if SA0 is grounded)
-
-/*=========================================================================
-    SSD1306 Displays
-    -----------------------------------------------------------------------
-    The driver is used in multiple displays (128x64, 128x32, etc.).
-    Select the appropriate display below to create an appropriately
-    sized framebuffer, etc.
-
-    SSD1306_128_64  128x64 pixel display
-
-    SSD1306_128_32  128x32 pixel display
-
-    SSD1306_96_16
-
-    -----------------------------------------------------------------------*/
-//   #define SSD1306_128_64
-   #define SSD1306_128_32
-//   #define SSD1306_96_16
-/*=========================================================================*/
-
-#if defined SSD1306_128_64 && defined SSD1306_128_32
-  #error "Only one SSD1306 display can be specified at once in SSD1306.h"
-#endif
-#if !defined SSD1306_128_64 && !defined SSD1306_128_32 && !defined SSD1306_96_16
-  #error "At least one SSD1306 display must be specified in SSD1306.h"
-#endif
-
-#if defined SSD1306_128_64
-  #define SSD1306_LCDWIDTH                  128
-  #define SSD1306_LCDHEIGHT                 64
-#endif
-#if defined SSD1306_128_32
-  #define SSD1306_LCDWIDTH                  128
-  #define SSD1306_LCDHEIGHT                 32
-#endif
-#if defined SSD1306_96_16
-  #define SSD1306_LCDWIDTH                  96
-  #define SSD1306_LCDHEIGHT                 16
-#endif
 
 #define SSD1306_SETCONTRAST 0x81
 #define SSD1306_DISPLAYALLON_RESUME 0xA4
@@ -141,13 +103,30 @@ All text above, and the splash screen must be included in any redistribution
 #define SSD1306_VERTICAL_AND_RIGHT_HORIZONTAL_SCROLL 0x29
 #define SSD1306_VERTICAL_AND_LEFT_HORIZONTAL_SCROLL 0x2A
 
-class Adafruit_SSD1306 : public Adafruit_GFX {
- public:
-  Adafruit_SSD1306(int8_t SID, int8_t SCLK, int8_t DC, int8_t RST, int8_t CS);
-  Adafruit_SSD1306(int8_t DC, int8_t RST, int8_t CS);
-  Adafruit_SSD1306(int8_t RST = -1);
+/*=========================================================================
+    SSD1306 Displays
+    -----------------------------------------------------------------------
+    The driver is used in multiple displays (128x64, 128x32, etc.).
+    Select the appropriate display below to create an appropriately
+    sized framebuffer, etc.
 
-  void begin(uint8_t switchvcc = SSD1306_SWITCHCAPVCC, uint8_t i2caddr = SSD1306_I2C_ADDRESS, bool reset=true);
+    SSD1306_128_64  128x64-pixel display
+    SSD1306_128_32  128x32-pixel display
+    SSD1306_96_16	96x16-pixel display
+
+/*=========================================================================*/
+#define SSD1306_128_32	128, 32
+#define SSD1306_128_64	128, 64
+#define SSD1306_96_16	96, 16
+
+class WereCatf_SSD1306 : public Adafruit_GFX {
+ public:
+  WereCatf_SSD1306(int16_t lcdWidth, int16_t lcdHeight, int8_t SID, int8_t SCLK, int8_t DC, int8_t RST, int8_t CS);
+  WereCatf_SSD1306(int16_t lcdWidth, int16_t lcdHeight, int8_t DC, int8_t RST, int8_t CS);
+  WereCatf_SSD1306(int16_t lcdWidth, int16_t lcdHeight, int8_t RST = -1);
+  ~WereCatf_SSD1306();
+
+  int8_t begin(uint8_t switchvcc = SSD1306_SWITCHCAPVCC, uint8_t i2caddr = SSD1306_I2C_ADDRESS, bool reset=true);
   void ssd1306_command(uint8_t c);
 
   void clearDisplay(void);
@@ -167,9 +146,16 @@ class Adafruit_SSD1306 : public Adafruit_GFX {
 
   virtual void drawFastVLine(int16_t x, int16_t y, int16_t h, uint16_t color);
   virtual void drawFastHLine(int16_t x, int16_t y, int16_t w, uint16_t color);
+ #if defined(ESP8266) || defined(ESP32)
+   void setI2CPins(int8_t sda, int8_t scl);
+ #endif
 
  private:
+  uint8_t *buffer = nullptr;
   int8_t _i2caddr, _vccstate, sid, sclk, dc, rst, cs;
+ #if defined(ESP8266) || defined(ESP32)
+  int8_t sda = -1, scl = -1;
+ #endif
   void fastSPIwrite(uint8_t c);
 
   boolean hwSPI;
@@ -183,4 +169,4 @@ class Adafruit_SSD1306 : public Adafruit_GFX {
 
 };
 
-#endif /* _Adafruit_SSD1306_H_ */
+#endif /* _WereCatf_SSD1306_H_ */

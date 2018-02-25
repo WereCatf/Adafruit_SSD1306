@@ -1,3 +1,47 @@
+# WereCatf_SSD1306
+
+This library has been modified from the Adafruit-original. I got fed up with the idea of having to modify the header-file depending on the display being used,
+so this version lets you choose the display-resolution on-the-fly by way of either of below examples:
+
+`WereCatf_SSD1306(int16_t width, int16_t height, int8_t SID, int8_t SCLK, int8_t DC, int8_t RST, int8_t CS);`
+`WereCatf_SSD1306(SSD1306_128_64, int8_t SID, int8_t SCLK, int8_t DC, int8_t RST, int8_t CS);`
+
+Valid values are:
+	SSD1306_128_64 for 128x64-pixel display
+	SSD1306_128_32 for 128x32-pixel display
+	SSD1306_96_16 for 96x16-pixel display
+
+You can also use `setI2CPins(int8_t sda, int8_t scl);` to set custom pins to use for I2C on the ESP8266 or ESP32 as long as you call this function *before* `begin()`
+
+----------------------------------------------------------------
+
+This is a library for our Monochrome OLEDs based on SSD1306 drivers
+
+  Pick one up today in the adafruit shop!
+  ------> http://www.adafruit.com/category/63_98
+
+These displays use SPI to communicate, 4 or 5 pins are required to  
+interface
+
+Adafruit invests time and resources providing this open source code, 
+please support Adafruit and open-source hardware by purchasing 
+products from Adafruit!
+
+Written by Limor Fried/Ladyada  for Adafruit Industries.  
+Scrolling code contributed by Michael Gregg
+BSD license, check license.txt for more information
+All text above must be included in any redistribution
+
+To download. click the DOWNLOADS button in the top right corner, rename the uncompressed folder Adafruit_SSD1306. Check that the Adafruit_SSD1306 folder contains Adafruit_SSD1306.cpp and Adafruit_SSD1306.h
+
+Place the Adafruit_SSD1306 library folder your <arduinosketchfolder>/libraries/ folder. You may need to create the libraries subfolder if its your first library. Restart the IDE.
+
+You will also have to download the Adafruit GFX Graphics core which does all the circles, text, rectangles, etc. You can get it from
+https://github.com/adafruit/Adafruit-GFX-Library
+and download/install that library as well 
+
+----------------------------------------------------------------
+
 # Adafruit_SSD1306
 <!-- START COMPATIBILITY TABLE -->
 

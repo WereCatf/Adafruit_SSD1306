@@ -19,10 +19,10 @@ All text above, and the splash screen must be included in any redistribution
 #include <SPI.h>
 #include <Wire.h>
 #include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
+#include <WereCatf_SSD1306.h>
 
 #define OLED_RESET 4
-Adafruit_SSD1306 display(OLED_RESET);
+WereCatf_SSD1306 display(SSD1306_128_64, OLED_RESET);
 
 #define NUMFLAKES 10
 #define XPOS 0
@@ -51,14 +51,18 @@ static const unsigned char PROGMEM logo16_glcd_bmp[] =
   B00000000, B00110000 };
 
 #if (SSD1306_LCDHEIGHT != 64)
-#error("Height incorrect, please fix Adafruit_SSD1306.h!");
+#error("Height incorrect, please fix WereCatf_SSD1306.h!");
 #endif
 
 void setup()   {                
   Serial.begin(9600);
 
   // by default, we'll generate the high voltage from the 3.3v line internally! (neat!)
-  display.begin(SSD1306_SWITCHCAPVCC, 0x3D);  // initialize with the I2C addr 0x3D (for the 128x64)
+  // initialize with the I2C addr 0x3D (for the 128x64)
+  if (display.begin(SSD1306_SWITCHCAPVCC, 0x3D) == -1){
+	  Serial.println("Failed to initialize display!");
+	  while(1) delay(500);
+  }
   // init done
   
   // Show image buffer on the display hardware.
