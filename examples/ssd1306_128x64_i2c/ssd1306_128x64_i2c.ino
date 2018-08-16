@@ -21,6 +21,7 @@ All text above, and the splash screen must be included in any redistribution
 #include <Adafruit_GFX.h>
 #include <WereCatf_SSD1306.h>
 
+//Change this to something else on ESP8266, GPIO4 is used by I2C for SDA by default
 #define OLED_RESET 4
 WereCatf_SSD1306 display(SSD1306_128_64, OLED_RESET);
 
