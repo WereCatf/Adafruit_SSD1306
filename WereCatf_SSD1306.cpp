@@ -97,7 +97,7 @@ WereCatf_SSD1306::~WereCatf_SSD1306(){
 }
 
 int8_t WereCatf_SSD1306::begin(uint8_t vccstate, uint8_t i2caddr, bool reset) {
-  buffer = reinterpret_cast<uint8_t*>(malloc(WIDTH * HEIGHT / 8));
+  if (buffer == nullptr) buffer = reinterpret_cast<uint8_t*>(malloc(WIDTH * HEIGHT / 8));
   if (buffer == nullptr) return -1;
   memset(buffer, 0, (WIDTH*HEIGHT/8));
 
