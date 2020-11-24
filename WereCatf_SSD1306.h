@@ -48,6 +48,9 @@ All text above, and the splash screen must be included in any redistribution
 
 #include <SPI.h>
 #include <Adafruit_GFX.h>
+#if defined(__ASR6501__)
+#define nullptr NULL
+#endif
 
 #define BLACK 0
 #define WHITE 1
