@@ -1,3 +1,7 @@
+# Archived
+This fork is no longer needed and will be archived.
+Adafruit's upstream nowadays allows for one to define the display's size on-the-fly, instead of requiring one to edit the include-files and allows for one to use a custom TwoWire-instance, making this fork redundant.
+
 # WereCatf_SSD1306
 
 This library has been modified from the Adafruit-original. I got fed up with the idea of having to modify the header-file depending on the display being used,
